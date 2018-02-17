@@ -1,118 +1,142 @@
 <template>
-	<div id="header">
-		<div class="logo">
-			Vue+Canvas后台管理
-			<span>v1.0</span>
-			<span v-show="isAdmin">[管理员]</span>
-		</div>
-		<div class="user" @mouseover="showUserX()">
-			<img class="avatar" src="../assets/images/avatar.jpg" alt="">
-			{{name}}
-			<img class="icon" src="../assets/images/drow.png" alt="">
-		</div>
-		<div class="user-x" v-show="show" @mouseleave="hideUserX()">
-			<ul>
-				<li>修改资料</li>
-				<li @click="logOut()">退出</li>
-			</ul>
-		</div>
-	</div>
-</template>
+  <navbar>
+    <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button" @click="mobileSidebarToggle">&#9776;</button>
+    <a class="navbar-brand" ></a>
+    <ul class="nav navbar-nav d-md-down-none">
+      <li class="nav-item">
+        <a class="nav-link navbar-toggler sidebar-toggler"  @click="sidebarMinimize">&#9776;</a>
+      </li>
+     
+    </ul>
 
+    <ul class="nav navbar-nav d-md-down-none">
+      
+       <li class="nav-item header-item">
+  
+
+        
+      </li>
+        <li class="nav-item header-item">
+        
+      
+
+
+      </li>
+
+
+
+
+        <li class="nav-item header-item">
+      
+
+       
+        </router-link> 
+
+
+      </li>
+
+
+
+     
+    </ul>
+
+
+    <ul class="nav navbar-nav ml-auto">
+      
+     
+
+      <Dropdown class="nav-item">
+        <a href="javascript:void(0)">
+           <span slot="button">
+          <img src="static/img/avatars/6.jpg" class="img-avatar" alt="o">
+          <span class="d-md-down-none">admin</span>
+          </span>
+        </a>
+        <Dropdown-menu slot="list">
+           
+           
+           
+            
+            
+              </Dropdown-item>
+
+                 <Dropdown-item > <a href="" @click="Logout"  ><p  class="dropdown-itemp"><Icon type="power"></Icon>Logout</p></a></Dropdown-item>
+
+        </Dropdown-menu>
+    </Dropdown>
+
+ 
+      <li class="nav-item d-md-down-none">
+        <a class="nav-link navbar-toggler aside-menu-toggler"  @click="asideToggle">&#9776;</a>
+      </li>
+    </ul>
+  </navbar>
+</template>
 <script>
 
-export default {
-	
-	data() {
-		return {
-			isAdmin: false,
-			show: false,
-			name: ''
-		}
-	},
-	created() {
-		this.name = sessionStorage.name
-		if (sessionStorage.userid) {
-			this.isAdmin = true
-		}
-	},
-	methods: {
-		showUserX() {
-			this.show = true
-		},
-		hideUserX() {
-			this.show = false
-		},
-		logOut() {
-			if (sessionStorage.userid) {
-				sessionStorage.id = ''
-				sessionStorage.userid = ''
-				sessionStorage.name = ''		
-			} else {
-				sessionStorage.id = ''
-				sessionStorage.name = ''	
-			}
+import navbar from './Navbar'
 
-			this.$router.push('/menu')
-		}
-	}
+export default {
+  name: 'header',
+  components: {
+    navbar,
+    
+  },
+  methods: {
+    Logout(e){
+         e.preventDefault();
+         this.$store.dispatch('LogOut').then(() => {
+                this.$router.push({ path: '/login' });
+              }).catch(err => {
+                this.$message.error(err);
+              });
+    },
+    click () {
+      // do nothing
+    },
+    sidebarToggle (e) {
+      e.preventDefault()
+      document.body.classList.toggle('sidebar-hidden')
+    },
+    sidebarMinimize (e) {
+      e.preventDefault()
+
+      document.body.classList.toggle('sidebar-minimized')
+    },
+    mobileSidebarToggle (e) {
+      e.preventDefault()
+
+      document.body.classList.toggle('sidebar-mobile-show')
+    },
+    asideToggle (e) {
+      e.preventDefault()
+      document.body.classList.toggle('aside-menu-hidden')
+    }
+  }
 }
 </script>
 
-<style scoped>
-#header{
-	position: relative;
-	height: 80px;
-	line-height: 80px;
-	display: flex;
-	padding: 0 20px;
-	justify-content: space-between;
-	z-index: 12;
+<style type="text/css" scoped>
+  .dropdown-itemp{
+    text-align: left;
+    font-size: 15px;
+    padding: 10px;
+  }
+ .header-item .ivu-dropdown-item{
+  padding: 15px;
 }
-.logo{
-	font-size: 26px;
-	font-weight: 600;
-}
-.logo span{
-	font-size: 16px;
-	margin-left: 15px;
-}
-.user{
-	font-size: 16px;
-}
-.user .avatar{
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	vertical-align: middle;
-	margin-right: 10px;
-}
-.user .icon{
-	width: 17px;
-    height: 17px;
-    margin-left: 5px;
-    vertical-align: middle;
-}
-.user-x{
-	position: absolute;
-	right: 20px;
-	top: 70px;
-	width: 100px;
-	height: 100px;
-	z-index: 1000;
-}
-.user-x ul li{
-	list-style: none;
-	width: 100px;
-	height: 50px;
-	line-height: 50px;
-	text-align: center;
-	cursor: pointer;
-}
-.user-x ul li a{
-	display: block;
-}
-.user-x ul li:hover{
-	background: rgba(7,17,27,.5);
-}
+  .header-item{
+    width: 130px;
+    /*background-color: #20a8d8;*/
+    /*background-color: white;*/
+
+    height: 55px;
+    
+    
+  }
+  .header-item a{
+        color:white !important;
+
+  }
+
 </style>

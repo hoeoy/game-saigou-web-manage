@@ -2,4 +2,6 @@
 node_modules/
 dist/
 npm-debug.log
-yarn-error.log
+selenium-debug.log
+.idea
+package-lock.json

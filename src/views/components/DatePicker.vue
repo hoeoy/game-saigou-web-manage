@@ -5,7 +5,7 @@
 
    <div style="font-size: 18px;position: relative;top: -5px;left: 30vw;width: 80px;background: #143f6d; color: #ccc;text-align: center;">历史记录</div>
 
-		<div class="shooo" style="width: 80vw;margin-top: -20px; height: 70vh;border: 1px solid #0078DE;padding: 30px;">
+		<div class="shooo" style="width: 80vw;margin-top: -20px; min-height: 70vh;border: 1px solid #0078DE;padding: 30px;">
 			<table id="customers" >
 				<tr>
 					
@@ -131,7 +131,9 @@
         		
         	
            let url =general+"/api/period/retrieve"
-           let str ={}
+           let str ={
+           	pk_user: sessionStorage.Pid
+           }
            this.$http.post(url,str).then((response) => {
 					if(response.body.success == true) {
 						this.$Message.success("查询成功")

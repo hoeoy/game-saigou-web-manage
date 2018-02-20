@@ -3,7 +3,7 @@
 
  <div style="font-size: 18px;position: relative;top: -5px;left: 30vw;width: 80px;background: #143f6d; color: #ccc;text-align: center;">积分记录</div>
 
-		<div class="shooo" style="width: 80vw;margin-top: -20px; height: 70vh;border: 1px solid #0078DE;padding: 30px;">
+		<div class="shooo" style="width: 80vw;margin-top: -20px; min-height: 70vh;border: 1px solid #0078DE;padding: 30px;">
 			<table id="customers" >
 				<tr>
 					<th>编号 </th>

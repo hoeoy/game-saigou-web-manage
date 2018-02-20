@@ -10,12 +10,12 @@
 			<span>距离封盘还有 <span style="color: red;" id="time">{{time}}</span>秒</span>
 			<span style="color: red;" v-if="falss">剩余30秒 禁止下注!</span>
 			</p>
-
-			<div v-for="(item,index) in listData" style="background: #0078DE;width: 420px;height: 30px;color: #fff;line-height: 30px;margin-top: 1vw;margin-right: 2vw;float: left;">
-				<span>号码或类型：</span><span>{{item.number}}</span>
-				<span style="margin-left: 3vw;">倍率：</span><span>{{item.Rate}}</span>
-				<span style="margin-left: 3vw;">积分数：</span><span><input onkeyup="value=value.replace(/[^\d]/g,'') " v-model="item.integral" style="background: #0078DE;height: 30px;border: none;color: #fff;width: 100px;"placeholder="请输入积分数"   ></span>
+			<div v-for="(item,index) in listData" style="width: 420px;height: 30px;color: #000;line-height: 30px;margin-top: 1vw;margin-right: 2vw;float: left;border: 1px solid #000000;">
+				<div style="width: 50px;height: 29px;color: #000;line-height: 30px;margin-right: 2vw;float: left;border-right: 1px solid #000000;text-align: center;">{{item.number}}</div>
+				<div style="width: 100px;height: 29px;color: #000;line-height: 30px;margin-right: 2vw;float: left;border-right: 1px solid #000000;">倍率：<span style="color: red;">{{item.Rate}}</span> </div>
+				<div>积分数：<span><input onkeyup="value=value.replace(/[^\d]/g,'') " v-model="item.integral" style="background:;height: 25px;border: none;color: red;width: 100px;"placeholder="请输入积分数"   ></span></div>
 			</div>
+		
 			<div style="width: 800px;height: 100%;float: left;height: 80px;text-align: center;margin-top: 35px;">
 				<!--<input type="checkbox" id="checkbox" v-model="checked">
         <label for="checkbox">快捷下注</label>-->
@@ -36,6 +36,7 @@
 		data() {
 			return {
 				falss:false,
+				Pids:"",
 				currt:"",
 				rest:'',
 				time: "",
@@ -164,7 +165,7 @@
 					let sss = {
 					bet_item: "",
 					bet_money: "",
-					pk_period: this.currt,
+					pk_period: this.Pids+"",
 					pk_user: sessionStorage.Pid
 				}
 					if(Data[i].integral !== "") {						
@@ -228,6 +229,7 @@
 					if(response.body.code == 0) {
 						this.currt =response.body.content.current_num
 						this.time =response.body.content.rest_second
+						this.Pids =response.body.content.pk_period
 						this.Inter() 
 						
 					} else {
@@ -275,5 +277,11 @@
 	
 	.shooo {
 		box-shadow: 2px 4px 15px #0066CC;
+	}
+	.bbb{
+		display: inline-block;border-right: 1px solid #000000;
+		height: 25px;
+		width: 40px;
+		
 	}
 </style>

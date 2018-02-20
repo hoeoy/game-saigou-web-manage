@@ -37,15 +37,15 @@
           }
         };
         const validatePass = (rule, value, callback) => {
-          if (value.length < 6) {
-            callback(new Error('密码不能小于6位'));
+          if (value.length < 1) {
+            callback(new Error('密码不能小于1位'));
           } else {
             callback();
           }
         };
         return {
           loginForm: {
-            email: 'admin@wz.com',
+            email: 'admin',
             password: ''
           },
           loginRules: {
@@ -113,11 +113,29 @@ animate();
        },
       methods: {
         handleLogin() {
-          this.$refs.loginForm.validate(valid => {
+        	let url = general+"/api/login/signin"
+        	let atrs ={
+        		 user_code: this.loginForm.email,
+                 user_password:this.loginForm.password
+        	}
+        	
+        	let str =JSON.stringify(atrs)
+        	
+        	
+        	
+        	this.$http.post(url, str).then((response) => {
+        		
+					if(response.body.success ==true){
+						          this.$refs.loginForm.validate(valid => {
             if (valid) {
               this.loading = true;
               this.$store.dispatch('LoginByEmail', this.loginForm).then(() => {
                 this.$Message.success('登录成功');
+                sessionStorage.userid =response.body.resultData.user_code
+                sessionStorage.user =response.body.resultData.user_name
+                sessionStorage.Pid =response.body.resultData.pk_user
+//              sessionStorage.user =response.body.resultData.user_name
+//              sessionStorage.user =response.body.resultData.user_name
                 
                 this.loading = false;
                 this.$router.push({ path: '/' });
@@ -126,10 +144,19 @@ animate();
                 this.loading = false;
               });
             } else {
+            	this.$Message.error('登录失败');
               console.log('error submit!!');
               return false;
             }
           });
+					}else{
+						this.$Message.error('登录失败请重新登录');
+					}
+
+				}).catch(function(response) {
+
+				});
+
         },
         afterQRScan() {
           // const hash = window.location.hash.slice(1);

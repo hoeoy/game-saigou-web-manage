@@ -1,6 +1,6 @@
 <template>
-	<div class="animated fadeIn" >
-		<div style="float: left;margin-right: 40px;margin-top: 40px;">
+	<div class="animated fadeIn"  >
+		<div style="float: left;margin-right: 40px;margin-top: 40px;" v-if=false>
 		<div style="font-size: 18px;position: relative;top: -5px;left: 220px;width: 80px;background: #143f6d; color: #ccc;text-align: center;">公告</div>
 		<div class="shooo" style="width: 500px;margin-top: -20px; height: 300px;border: 1px solid #0078DE;">
 			<p style="text-align: center;margin-top: 30px;">title</p><p style="float: right;margin-top: 200px;">2018/12/12</p>
@@ -8,27 +8,13 @@
 		</div>
 		
 		</div>
-		<div style="float: left;margin-right: 40px;margin-top: 40px;">
-		<div style="font-size: 18px;position: relative;top: -5px;left: 220px;width: 80px;background: #143f6d; color: #ccc;text-align: center;">公告</div>
-		<div class="shooo" style="width: 500px;margin-top: -20px; height: 300px;border: 1px solid #0078DE;">
-			<p style="text-align: center;margin-top: 30px;">title</p><p style="float: right;margin-top: 200px;">2018/12/12</p>
-			<p>澳门游戏俱乐部今日降临河北了11111111</p>
-		</div>
-		
-		</div>
-		<div style="float: left;margin-right: 40px;margin-top: 40px;">
-		<div style="font-size: 18px;position: relative;top: -5px;left: 220px;width: 80px;background: #143f6d; color: #ccc;text-align: center;">公告</div>
-		<div class="shooo" style="width: 500px;margin-top: -20px; height: 300px;border: 1px solid #0078DE;">
-			<p style="text-align: center;margin-top: 30px;">title</p><p style="float: right;margin-top: 200px;">2018/12/12</p>
-			<p>澳门游戏俱乐部今日降临河北了11111111</p>
-		</div>
-		
-		</div>
+		<span>暂无公告……</span>
 		
 	
 		
 
 	</div>
+	
 </template>
 
 <script>

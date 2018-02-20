@@ -9,14 +9,14 @@
 					<th>时间</th>
 					<th>下注积分 </th>
 					<th>中奖积分 </th>
-					<th>反水积分 </th>
+					<!--<th>反水积分 </th>-->
 					
 				</tr>
 				<tr v-for="(item,index) in listData" id="altss">
-					<td>{{item.Number}}</td>
-					<td>{{item.Account}}</td>
-					<td>{{item.numbers}}</td>
-					<td>{{item.Number}}</td>
+					<td>{{item.period_code}}</td>
+					<td>{{item.period_code}}</td>
+					<td>{{item.period_code}}</td>
+					<!--<td>{{item.Number}}</td>-->
 					
 				</tr>
 				
@@ -32,48 +32,37 @@
             return {
                 listData:[
 					{
-						Number:'xxxx',
-						Account:'xxxx',
-						numbers:'2018121212',
-						type:'单/双',
-						tebnumber:'5.00',
-						time:'2018,10,10'
+						period_code:'暂不开放此功能',
+						Account:'',
+						numbers:'',
+						type:'',
+						tebnumber:'',
+						time:''
 						
-					},
-						{
-						Number:'xxxx',
-						Account:'xxxx',
-						numbers:'2018121212',
-						type:'单/双',
-						tebnumber:'5.00',
-						time:'2018,10,10'
-						
-					},
+					}
+		
 				],
                 
             }   
         },//data
       methods: {
-            handleSubmit(name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        this.$Message.success('提交成功!');
-                    } else {
-                        this.$Message.error('表单验证失败!');
-                    }
-                })
-            },
-             handleReset (name) {
-                this.$refs[name].resetFields();
-            },
-            handleAdd () {
-                this.formDynamic.items.push({
-                    value: ''
-                });
-            },
-            handleRemove (index) {
-                this.formDynamic.items.splice(index, 1);
-            },
+      	recae(){
+           let url =general+"/api/period/retrieveSummery"
+           this.$http.get(url).then((response) => {
+           	this.listData =response.body.content
+					if(response.body.code == 0) {
+						
+						this.listData =response.body.content
+					} else {
+						this.$Message.error(response.body.msg)
+					}
+				}).catch(function(response) {
+					this.$Message.error("服务器故障请联系管理员")
+				});
+      	},
+        },
+        mounted(){
+        	this.recae()
         }
            
     }

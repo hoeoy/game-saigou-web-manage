@@ -6,11 +6,11 @@
 		
 		<div class="shooo" style="width: 500px;margin-top: -20px; height: 300px;border: 1px solid #0078DE;">
 			 <p style="margin-top: 40px;"></p>
-			 <div class="menus "><span>所属用户组:</span><span>代理</span></div>
-			 <div class="menus "><span>登录账号:</span><span>admin</span></div>
-			 <div class="menus "><span>修改密码:</span><span><input type="" name="" id="" value=""  style="border: none;background: #eff0f4;height: 30px;"/></span></div>
+			 <!--<div class="menus "><span>所属用户组:</span><span>代理</span></div>-->
+			 <div class="menus "><span>登录账号:</span><span>{{admin}}</span></div>
+			 <div class="menus "><span>修改密码:</span><span><input type="" name="" id="" v-model="psss"  style="border: none;background: #eff0f4;height: 30px;"/></span></div>
 			 <p>密码大于6位，小于15位，数字或大小写字母</p>
-			 <button style="width: 80px;height: 30px;margin-left: 100px;background: #0078DE; border: none;border-radius: 2px;">提交</button>
+			 <button style="width: 80px;height: 30px;margin-left: 100px;background: #0078DE; border: none;border-radius: 2px;" @click="buttons()">提交</button>
 		</div>
 		
  
@@ -49,14 +49,31 @@ export default {
   name: 'dashboard',
         data () {
             return {
-                value1: 0,
-                value2: 0,
-                value3: 0,
-
-                speed:10000,
+                admin:sessionStorage.user,
+                psss:''
             }
         },
         methods:{
+        	buttons(){
+        		let str = {
+        			user_password :this.psss,
+        			pk_user:sessionStorage.Pid
+        		}
+        		let strs =JSON.stringify(str)
+        		let url =general+"/root/base/user/save"
+        		     	this.$http.post(url,strs).then((responsr)=>{
+            			if(response.body.success ==true){
+            				this.$Message.success('修改用户成功');
+            				this.passs =""
+            			}else(
+            				this.$Message.error(response.body.msg),
+            				this.passs =""
+            			)
+            	}).catch(function(response) {
+						
+						this.passs =""
+				});
+        	},
               test_logout(){
                  this.$store.dispatch('LogOut').then(() => {
                     this.$router.push({ path: '/login' });
@@ -67,12 +84,16 @@ export default {
         },
         mounted(){
                 const token=this.$store.getters.token;
+                if(typeof(sessionStorage.userid)==undefined){
+                	this.$Message.error('请重新登录');
+                }
                 
              this.$Notice.success({
                     title: '欢迎使用管理系统',
-                    desc:  `你的账户权限是 ${token}
-                    <span></span>
-                    `,
+                    //desc:  `你的账户权限是 ${token}
+                    //<span></span>
+                    //`,
+                    
                             
                         
                     duration: 10

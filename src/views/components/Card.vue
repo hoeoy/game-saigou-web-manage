@@ -1,7 +1,29 @@
 <template>
   <div class="animated fadeIn">
 
- 我不会动方法
+ <div style="font-size: 18px;position: relative;top: -5px;left: 30vw;width: 80px;background: #143f6d; color: #ccc;text-align: center;">积分记录</div>
+
+		<div class="shooo" style="width: 80vw;margin-top: -20px; height: 70vh;border: 1px solid #0078DE;padding: 30px;">
+			<table id="customers" >
+				<tr>
+					<th>编号 </th>
+					<th>账号 </th>
+					<th>期数 </th>
+					<th>类型 </th>
+					<th>积分明细 </th>
+					<th>时间 </th>
+				</tr>
+				<tr v-for="(item,index) in listData" id="altss">
+					<td>{{item.period_code}}</td>
+					<td>{{item.user_code}}</td>
+					<td>{{item.pk_bet}}</td>
+					<td>{{item.bet_item}}</td>
+					<td>{{item.money}}</td>
+					<td>{{item.ts}}</td>
+				</tr>
+				
+			</table>
+		</div>
 
 
 </div>
@@ -11,86 +33,70 @@
     export default {
         data () {
             return {
-                movieList: [
-                    {
-                        name: '肖申克的救赎',
-                        url: 'https://movie.douban.com/subject/1292052/',
-                        rate: 9.6
-                    },
-                    {
-                        name: '这个杀手不太冷',
-                        url: 'https://movie.douban.com/subject/1295644/',
-                        rate: 9.4
-                    },
-                    {
-                        name: '霸王别姬',
-                        url: 'https://movie.douban.com/subject/1291546/',
-                        rate: 9.5
-                    },
-                    {
-                        name: '阿甘正传',
-                        url: 'https://movie.douban.com/subject/1292720/',
-                        rate: 9.4
-                    },
-                    {
-                        name: '美丽人生',
-                        url: 'https://movie.douban.com/subject/1292063/',
-                        rate: 9.5
-                    },
-                    {
-                        name: '千与千寻',
-                        url: 'https://movie.douban.com/subject/1291561/',
-                        rate: 9.2
-                    },
-                    {
-                        name: '辛德勒的名单',
-                        url: 'https://movie.douban.com/subject/1295124/',
-                        rate: 9.4
-                    },
-                    {
-                        name: '海上钢琴师',
-                        url: 'https://movie.douban.com/subject/1292001/',
-                        rate: 9.2
-                    },
-                    {
-                        name: '机器人总动员',
-                        url: 'https://movie.douban.com/subject/2131459/',
-                        rate: 9.3
-                    },
-                    {
-                        name: '盗梦空间',
-                        url: 'https://movie.douban.com/subject/3541415/',
-                        rate: 9.2
-                    }
-                ],
-                randomMovieList: []
+                
+                listData:[{}]
             }
         },
         methods: {
-            changeLimit () {
-                function getArrayItems(arr, num) {
-                    const temp_array = [];
-                    for (let index in arr) {
-                        temp_array.push(arr[index]);
-                    }
-                    const return_array = [];
-                    for (let i = 0; i<num; i++) {
-                        if (temp_array.length>0) {
-                            const arrIndex = Math.floor(Math.random()*temp_array.length);
-                            return_array[i] = temp_array[arrIndex];
-                            temp_array.splice(arrIndex, 1);
-                        } else {
-                            break;
-                        }
-                    }
-                    return return_array;
-                }
-                this.randomMovieList = getArrayItems(this.movieList, 5);
-            }
+           	retrieve(){
+        		
+        	
+           let url =general+"/api/cash/retrieve"
+           let str ={
+           	 pk_user: sessionStorage.Pid
+           }
+           this.$http.post(url, str).then((response) => {
+					if(response.body.success == true) {
+						this.listData =response.body.resultData
+					} else {
+						this.$Message.error(response.body.msg)
+					}
+				}).catch(function(response) {
+					this.$Message.error("服务器故障请联系管理员")
+				});
+				},
+            
         },
         mounted () {
-            this.changeLimit();
+            this.retrieve()
         }
     }
 </script>
+<style scoped lang="css">
+		#customers {
+		font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+		width: 100%;
+		border-collapse: collapse;
+	}
+	/*id为customers 的标签里面的td标签和th标签的样式*/
+	
+	#customers td,
+	#customers th {
+		font-size: 1em;
+		border: 1px solid #697182;
+		padding: 3px 7px 2px 7px;
+	}
+	/*id为customers 的标签里面的th标签的样式*/
+	
+	#customers th {
+		font-size: 1.1em;
+		text-align: left;
+		padding-top: 5px;
+		padding-bottom: 4px;
+		background-color: #0078DE;
+		color: #FFF;
+	}
+	/*id为customers的标签里面的class名为alt的tr标签里面的td标签的样式*/
+	
+	#customers tr td {
+		color: #000;
+		background-color: #EAF2D3;
+	}
+	#customers #altss tr:hover{
+		background: #0066CC;
+	}
+.shooo{
+	box-shadow: 2px 4px 15px #0066CC;
+}
+</style>
 

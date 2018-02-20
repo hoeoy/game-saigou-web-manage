@@ -14,12 +14,12 @@
 					<th>时间 </th>
 				</tr>
 				<tr v-for="(item,index) in listData" id="altss">
-					<td>{{item.Number}}</td>
-					<td>{{item.Account}}</td>
-					<td>{{item.numbers}}</td>
-					<td>{{item.Number}}</td>
-					<td>{{item.tebnumber}}</td>
-					<td>{{item.time}}</td>
+					<td>{{item.period_code}}</td>
+					<td>{{item.user_code}}</td>
+					<td>{{item.pk_bet}}</td>
+					<td>{{item.bet_desc}}</td>
+					<td>{{item.bet_money}}</td>
+					<td>{{item.ts}}</td>
 				</tr>
 				
 			</table>
@@ -41,29 +41,42 @@
 			return {
 				listData:[
 					{
-						Number:'xxxx',
-						Account:'xxxx',
-						numbers:'2018121212',
-						type:'单/双',
-						tebnumber:'5.00',
-						time:'2018,10,10'
+						period_code:'xxxx',
+						user_code:'xxxx',
+						ts:'2018121212',
+						pk_bet:'单/双',
+						bet_desc:'5.00',
+						bet_money:'2018,10,10'
 						
-					},
-						{
-						Number:'xxxx',
-						Account:'xxxx',
-						numbers:'2018121212',
-						type:'单/双',
-						tebnumber:'5.00',
-						time:'2018,10,10'
-						
-					},
+					}
 				],
 			}
 		},
+		mounted:function(){
+			this.retrve()
+		},
 		methods: {
-			
-		}
+			retrve(){
+			let url =general+"/api/bet/retrieve"
+			let str ={
+				pk_user :sessionStorage.Pid,
+				length:200,
+				orderColumnName:"ts",
+				orderDir:"desc"
+			}
+			this.$http.post(url, str).then((response) => {
+					if(response.body.success == true) {
+						//this.$Message.success("")
+						this.listData =response.body.resultData
+					} else {
+						this.$Message.error(response.body.msg)
+					}
+				}).catch(function(response) {
+					this.$Message.error("服务器故障请联系管理员")
+				});
+		},
+		
+			}
 	}
 </script>
 

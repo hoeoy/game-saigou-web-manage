@@ -7,18 +7,27 @@
 			<table id="customers" >
 				<tr>
 					<th>编号 </th>
-					<th>账号 </th>
-					<th>期数 </th>
+					<th>账号 </th>					
 					<th>类型 </th>
 					<th>积分明细 </th>
+					<th>结账前/积分</th>
+					<th>结账后 /积分</th>
 					<th>时间 </th>
 				</tr>
 				<tr v-for="(item,index) in listData" id="altss">
-					<td>{{item.period_code}}</td>
+					<td>{{item.pk_cash}}</td>
 					<td>{{item.user_code}}</td>
-					<td>{{item.pk_bet}}</td>
-					<td>{{item.bet_item}}</td>
+					
+					<td>
+						<span v-if="item.cash_type=='win'">中奖{{item.bet_item}}</span>
+						<span v-if="item.cash_type=='bet'">{{item.period_code}}下注{{item.bet_item}}号狗</span>
+						<span v-if="item.cash_type=='top_up'">充值{{item.bet_item}}</span>
+						<span v-if="item.cash_type=='with_draw'">结账{{item.bet_item}}</span>
+					</td>
 					<td>{{item.money}}</td>
+					<td>{{item.total_money_before}}</td>
+					<td>{{item.total_money_after}}</td>
+					
 					<td>{{item.ts}}</td>
 				</tr>
 				

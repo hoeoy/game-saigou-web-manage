@@ -3,12 +3,12 @@
 
 		<div style="font-size: 18px;position: relative;top: -5px;left: 30vw;width: 80px;background: #143f6d; color: #ccc;text-align: center;">下注记录</div>
 
-		<div class="shooo" style="width: 80vw;margin-top: -20px; height: 70vh;border: 1px solid #0078DE;padding: 30px;">
+		<div class="shooo" style="width: 80vw;margin-top: -20px; height: 450px;overflow: auto;border: 1px solid #0078DE;padding: 30px;">
 			<table id="customers" >
 				<tr>
 					<th>编号 </th>
 					<th>账号 </th>
-					<th>期数 </th>
+					
 					<th>类型 </th>
 					<th>下注数量 </th>
 					<th>时间 </th>
@@ -16,7 +16,7 @@
 				<tr v-for="(item,index) in listData" id="altss">
 					<td>{{item.period_code}}</td>
 					<td>{{item.user_code}}</td>
-					<td>{{item.pk_bet}}</td>
+					
 					<td>{{item.bet_desc}}</td>
 					<td>{{item.bet_money}}</td>
 					<td>{{item.ts}}</td>

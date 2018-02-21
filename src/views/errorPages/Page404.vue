@@ -7,18 +7,35 @@
 
 
 
-<div class="content">
-  <canvas class="snow" id="snow" width="1349" height="400"></canvas>
-  <div class="main-text">
-    <h1>天啊。<br>那页失踪了。</h1>
-    <div class="main-text-a"><a href="#"> 返回首页</a></div>  
-  </div>
-  <div class="ground">
-    <div class="mound"> 
-      <div class="mound_text">404 </div>
-      <div class="mound_spade"></div> 
+<div class="content" >
+  <canvas class="snow" id="snow" width="3000px" height="400"></canvas>
+  <div class="main-text" style="margin-top: -100px;">
+    <h4>免责声明</h4>
+    <div style="font-size: 12px;line-height:30px;height: 2000px;float: left;text-align: left;margin-left: 5vw;">
+    	● 01. 为避免出现争议请仔细阅读以下信息<br />
+       ● 02.  使用本网站的各户及玩家，请留意所在国家或居住地的相关法律法规，如有疑问可寻求当地的法律意见，守法娱乐。<br />
+
+● 03.  若发生遭骇客入侵破坏行为或不可抗拒之灾害导致网站故障、或资料损坏、资料丢失等情况，我们将以本公司资料为最后处理依据。为确保各方利益，请会员列印资料，本公司不会接受没有列印资料的投诉。<br />
+
+● 04.  为避免纠纷，各会员在投注之后务必进入状况检查及列印资料，若发生任何异常，请立即与代理商联系查证，一切投注将以本公司资料库的资料为准。如出现特殊网络情况或线路不稳定导致不能下注或下注失败，本公司概不负责。<br />
+
+● 05.  开奖结果以官方公布的结果为准。<br />
+
+● 06.  我们将竭力提供准确而可靠的开奖统计资料，但并不保证资料绝对无误，统计资料仅供参考，并非是对客户行为的指引，本公司也不接受于统计数据产生错误而引起的相关投诉。<br />
+
+● 07.  本公司拥有一切判决及注销任何涉嫌以非常方式之权利，在进行更深入的调查期间，将停止发放与其有关之任何下分及颁奖的程序。<br />
+
+    客户有责任确保自己的账户及密码保密，如果客户怀疑自己的资料被盗用，应立即通知本公司或当地代理商，并须更改个人详细资料，所有被盗用账号之损失将由客户自己负责。<br />
+
+● 08.  与本公司客服或当地代理商联系，申请账号密码，谢谢<br />
+
+● 09.  若官方游戏中心遇到黑客或病毒出现开奖错误导致本系统采集数据时出错情况下，当期错误的所有注单以官方网站更改后的数据标准重新结算，在此特别声明，客户不得有任何异议。 <br />
+● 10. <span style="color:red;"> 以上押奖只限娱乐游戏及奖励游戏，本站拒绝各种赌博、色情。</span><br />
+  <input type="checkbox" v-model="yes" @click="yess()"/>同意<span style="margin-left: 40px;"></span><input type="checkbox" v-model="no"/>不同意 
     </div>
+     
   </div>
+ 
 </div>
 
   
@@ -34,7 +51,7 @@ import Vue from 'vue'
 
         data () {
             return {
-           
+           yes:false
             }
         },
         mounted(){
@@ -118,7 +135,17 @@ import Vue from 'vue'
     });
 })();
 
-        }
+       },
+       methods:{
+       	yess(){     		
+       		if(this.yes == true){
+       			
+       			this.$router.push({
+       				path:"/"
+       			})
+       		}
+       	}
+       }
        
        
     }
@@ -141,8 +168,8 @@ import Vue from 'vue'
   position: relative;
   z-index: 1;
   background-color: #d2e1ec;
-  background-image: -webkit-linear-gradient(top, #bbcfe1 0%, #e8f2f6 80%);
-  background-image: linear-gradient(to bottom, #bbcfe1 0%, #e8f2f6 80%);
+ // background-image: -webkit-linear-gradient(top, #bbcfe1 0%, #e8f2f6 80%);
+ // background-image: linear-gradient(to bottom, #bbcfe1 0%, #e8f2f6 80%);
   overflow: hidden;
 }
 
@@ -155,7 +182,7 @@ import Vue from 'vue'
 }
 
 .main-text {
-  padding: 20vh 20px 0 20px;
+  padding: 20vh 0px 0 20px;
   text-align: center;
   line-height: 2em;
   font-size: 5vh;
@@ -243,8 +270,8 @@ import Vue from 'vue'
   z-index: 1;
   border-radius: 100%;
   background-color: #e8f2f6;
-  background-image: -webkit-linear-gradient(top, #dee8f1, #f6f9fa 60px);
-  background-image: linear-gradient(to bottom, #dee8f1, #f6f9fa 60px);
+  //background-image: -webkit-linear-gradient(top, #dee8f1, #f6f9fa 60px);
+  //background-image: linear-gradient(to bottom, #dee8f1, #f6f9fa 60px);
 }
 .mound:after {
   content: '';

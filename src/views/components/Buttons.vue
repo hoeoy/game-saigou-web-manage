@@ -6,7 +6,7 @@
 		<div class="shooo" style="width: 80vw;margin-top: -20px; min-height: 500px;border: 1px solid #0078DE;padding: 30px;">
 
 			<!--<p><span >今日盈亏<span style="color: red;"></span></span>-->
-			<span>可用积分 <span style="color: red;">{{money}}</span></span>
+			<span>可用积分 <span style="color: red;">{{money/100}}</span></span>
 			<span>距离封盘还有 <span style="color: red;" id="time">{{time}}</span>秒</span>
 			<span style="color: red;" v-if="falss">剩余30秒 禁止下注!</span>
 			</p>
@@ -170,7 +170,7 @@
 				}
 					if(Data[i].integral !== "") {						
 						sss.bet_item = Data[i].numberid
-						sss.bet_money = Data[i].integral						
+						sss.bet_money = Data[i].integral*100						
 						arr.push(sss)
 					//console.log(999,arr)
 					}
@@ -191,11 +191,23 @@
 				this.$http.post(url, arr).then((response) => {
 					if(response.body.success == true) {
 						this.$Message.success("下注成功")
+						let i
+							for(i of this.listData) {
+								i.integral = ""
+							}
 					} else {
 						this.$Message.error(response.body.msg)
+						let i
+							for(i of this.listData) {
+								i.integral = ""
+							}
 					}
 				}).catch(function(response) {
 					this.$Message.error("服务器故障请联系管理员")
+					let i
+							for(i of this.listData) {
+								i.integral = ""
+							}
 				});
 			},
 			Reset() {

@@ -24,9 +24,9 @@
 						<span v-if="item.cash_type=='top_up'">充值{{item.bet_item}}</span>
 						<span v-if="item.cash_type=='with_draw'">结账{{item.bet_item}}</span>
 					</td>
-					<td>{{item.money}}</td>
-					<td>{{item.total_money_before}}</td>
-					<td>{{item.total_money_after}}</td>
+					<td>{{item.money/100}}</td>
+					<td>{{item.total_money_before/100}}</td>
+					<td>{{item.total_money_after/100}}</td>
 					
 					<td>{{item.ts}}</td>
 				</tr>

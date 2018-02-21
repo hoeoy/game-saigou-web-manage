@@ -18,7 +18,7 @@
 					<td>{{item.user_code}}</td>
 					<td>{{item.pk_period}}</td>
 					<td>{{item.bet_desc}}</td>
-					<td>{{item.bet_money}}</td>
+					<td>{{item.bet_money/100}}</td>
 					<td>{{item.ts}}</td>
 				</tr>
 				

@@ -13,9 +13,9 @@
 					
 				</tr>
 				<tr v-for="(item,index) in listData" id="altss">
-					<td>{{item.period_code}}</td>
-					<td>{{item.period_code}}</td>
-					<td>{{item.period_code}}</td>
+					<td>{{item.date}}</td>
+					<td>{{item.bet/100}}</td>
+					<td>{{item.win/100}}</td>
 					<!--<td>{{item.Number}}</td>-->
 					
 				</tr>
@@ -28,31 +28,28 @@
 </template>
 <script>
     export default {
+    	name: 'form',
         data () {
             return {
-                listData:[
-					{
-						period_code:'暂不开放此功能',
-						Account:'',
-						numbers:'',
-						type:'',
-						tebnumber:'',
-						time:''
-						
-					}
-		
-				],
+                listData:[{}],
                 
             }   
         },//data
+        mounted:function(){
+        	this.recae()
+        },
       methods: {
       	recae(){
-           let url =general+"/api/period/retrieveSummery"
-           this.$http.get(url).then((response) => {
+      		let str ={
+ 				 pk_user: sessionStorage.Pid
+      		}
+           let url =general+"/api/cash/retrieveAgg"
+           this.$http.post(url,str).then((response) => {
            	this.listData =response.body.content
-					if(response.body.code == 0) {
+					if(response.body.success == true) {
 						
-						this.listData =response.body.content
+						this.listData =response.body.resultData
+						console.log(44455,this.listData)
 					} else {
 						this.$Message.error(response.body.msg)
 					}
@@ -61,9 +58,7 @@
 				});
       	},
         },
-        mounted(){
-        	this.recae()
-        }
+        
            
     }
 </script>

@@ -130,7 +130,7 @@ animate();
             if (valid) {
               this.loading = true;
               this.$store.dispatch('LoginByEmail', this.loginForm).then(() => {
-                this.$Message.success('登录成功');
+               
                 sessionStorage.userid =response.body.resultData.user_code
                 sessionStorage.user =response.body.resultData.user_name
                 sessionStorage.Pid =response.body.resultData.pk_user
@@ -138,7 +138,7 @@ animate();
 //              sessionStorage.user =response.body.resultData.user_name
                 
                 this.loading = false;
-                this.$router.push({ path: '/' });
+                this.$router.push({ path: '*' });
               }).catch(err => {
                 this.$message.error(err);
                 this.loading = false;

@@ -8,7 +8,19 @@
       </li>
      
     </ul>
-
+		<span style="margin-left: 25vw;font-size: 18px;color: #FFF">
+			最新赛狗排名：
+			{{listData.f1}}
+			{{listData.f2}}	
+			{{listData.f3}}	
+			{{listData.f4}}	
+			{{listData.f5}}	
+			{{listData.f6}}	
+			{{listData.f7}}	
+			{{listData.f8}}	
+			{{listData.f9}}	
+			{{listData.f10}}	
+		</span>
     <ul class="nav navbar-nav d-md-down-none">
       
        <li class="nav-item header-item">
@@ -49,10 +61,10 @@
         <a href="javascript:void(0)">
            <span slot="button">
           <img src="static/img/avatars/6.jpg" class="img-avatar" alt="o">
-          <span class="d-md-down-none">admin</span>
+          <span class="d-md-down-none">{{admins}}</span>
           </span>
         </a>
-        <Dropdown-menu slot="list">
+        <Dropdown-menu slot="list" >
            
            
            
@@ -65,10 +77,10 @@
         </Dropdown-menu>
     </Dropdown>
 
- 
-      <li class="nav-item d-md-down-none">
+ <span style="width: 30px;"></span>
+      <!--<li class="nav-item d-md-down-none">
         <a class="nav-link navbar-toggler aside-menu-toggler"  @click="asideToggle">&#9776;</a>
-      </li>
+      </li>-->
     </ul>
   </navbar>
 </template>
@@ -82,7 +94,44 @@ export default {
     navbar,
     
   },
+  data(){
+  	return{
+  		admins:sessionStorage.user,
+  		listData:{
+  			f1:1,
+  			f1:2,
+  			f1:3,
+  			f1:4,
+  			f1:5,
+  			f1:6,
+  			f1:7,
+  			f1:8,
+  			f1:9,
+  			f1:10
+  		}
+  	}
+  },
+  mounted:function(){
+  	this.retrieve()
+  },
   methods: {
+  	 retrieve(){
+        		
+        	
+           let url =general+"/api/period/retrieve"
+           let str ={
+           	pk_user: sessionStorage.Pid
+           }
+           this.$http.post(url,str).then((response) => {
+					if(response.body.success == true) {
+						this.listData =response.body.resultData[1]
+					} else {
+						this.$Message.error(response.body.msg)
+					}
+				}).catch(function(response) {
+					this.$Message.error("服务器故障请联系管理员")
+				});
+				},
     Logout(e){
          e.preventDefault();
          this.$store.dispatch('LogOut').then(() => {

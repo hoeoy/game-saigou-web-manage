@@ -8,39 +8,44 @@
 			<!--<p><span >今日盈亏<span style="color: red;"></span></span>-->
 			<span>可用积分 <span style="color: red;">{{money/100}}</span></span>
 			<span>距离封盘还有 <span style="color: red;" id="time">{{time}}</span>秒</span>
-			<span style="color: red;" v-if="falss">剩余30秒 禁止下注!</span>
+			<span style="color: red;" v-if="falss">剩余40秒 禁止下注!</span>
 			</p>
 			<div v-for="(item,index) in listData" style="width: 420px;height: 30px;color: #000;line-height: 30px;margin-top: 1vw;margin-right: 2vw;float: left;border: 1px solid #000000;">
 				<div style="width: 50px;height: 29px;color: #000;line-height: 30px;margin-right: 2vw;float: left;border-right: 1px solid #000000;text-align: center;">{{item.number}}</div>
 				<div style="width: 100px;height: 29px;color: #000;line-height: 30px;margin-right: 2vw;float: left;border-right: 1px solid #000000;">倍率：<span style="color: red;">{{item.Rate}}</span> </div>
 				<div>积分数：<span><input onkeyup="value=value.replace(/[^\d]/g,'') " v-model="item.integral" style="background:;height: 25px;border: none;color: red;width: 100px;"placeholder="请输入积分数"   ></span></div>
 			</div>
-		
+
 			<div style="width: 800px;height: 100%;float: left;height: 80px;text-align: center;margin-top: 35px;">
 				<!--<input type="checkbox" id="checkbox" v-model="checked">
         <label for="checkbox">快捷下注</label>-->
-				<button style="width: 60px;height: 30px;background: #0066CC;border: none;border-radius: 2px;margin-left: 10px;" @click="Commit()">提交</button>
+				<button style="width: 60px;height: 30px;background: #0066CC;border: none;border-radius: 2px;margin-left: 10px;" @click="Commit()" id="ccccc" :disabled="styles">提交</button>
 				<button style="width: 60px;height: 30px;background: #0066CC;border: none;border-radius: 2px;margin-left: 10px;" @click="Reset()">重置</button>
 			</div>
-			
+
 		</div>
-   <p style="position: relative;top:-50px;left: 20px;color: red;">本期结束将自动跳转到中奖记录页面，如有问题请联系管理员</p>
+		<p style="position: relative;top:-50px;left: 20px;color: red;">本期结束将自动刷新数据，如有问题请
+			<a @click="routPu">手动刷新</a>
+		</p>
 	</div>
 
 </template>
 
 <script>
+	import $ from 'jquery';
 	export default {
 		name: 'buttons',
 
 		data() {
 			return {
-				falss:false,
-				Pids:"",
-				currt:"",
-				rest:'',
-				time: "",
-				money:"",
+				styles:false,
+				
+				falss: false,
+				Pids: "",
+				currt: "",
+				rest: '',
+				time: 300,
+				money: "",
 				checked: false,
 				listData: [{
 						number: 1,
@@ -125,31 +130,32 @@
 				]
 			}
 		},
-		ready: function(){
-			//this.Inter()
+		ready: function() {
+			this.recae()
 		},
-		mounted:function(){
+		mounted: function() {
 			this.recae()
 			this.catchFlow()
+			this.beilv()
 		},
-		watch:{
-			"this.time":{
-				handler (val, oldVal) {
-       		console.log(val)
-       		if(this.time ==0){
-       			alert(222)
-       			location.reload()
-       		}
-      },
-			deep: true
+		watch: {
+			"this.time": {
+				handler(val, oldVal) {
+					console.log(val)
+					if(this.time == 0) {
+						alert(222)
+						location.reload()
+					}
+				},
+				deep: true
 			}
-      
+
 		},
 		methods: {
-			times(){
-				if(this.time ==0){
+			times() {
+				if(this.time == 0) {
 					this.$router.push({
-						path:'buttons'
+						path: 'buttons'
 					})
 				}
 			},
@@ -159,24 +165,24 @@
 			Commit() {
 				let Data = this.listData
 				let i
-				
+
 				let arr = []
 				for(i in Data) {
 					let sss = {
-					bet_item: "",
-					bet_money: "",
-					pk_period: this.Pids+"",
-					pk_user: sessionStorage.Pid
-				}
-					if(Data[i].integral !== "") {						
-						sss.bet_item = Data[i].numberid
-						sss.bet_money = Data[i].integral*100						
-						arr.push(sss)
-					//console.log(999,arr)
+						bet_item: "",
+						bet_money: "",
+						pk_period: this.Pids + "",
+						pk_user: sessionStorage.Pid
 					}
-           
+					if(Data[i].integral !== "") {
+						sss.bet_item = Data[i].numberid
+						sss.bet_money = Data[i].integral * 100
+						arr.push(sss)
+						//console.log(999,arr)
+					}
+
 				}
-        
+
 				//console.log(3333,numberid)
 				//let item =
 				//          	let stes ={
@@ -192,22 +198,22 @@
 					if(response.body.success == true) {
 						this.$Message.success("下注成功")
 						let i
-							for(i of this.listData) {
-								i.integral = ""
-							}
+						for(i of this.listData) {
+							i.integral = ""
+						}
 					} else {
 						this.$Message.error(response.body.msg)
 						let i
-							for(i of this.listData) {
-								i.integral = ""
-							}
+						for(i of this.listData) {
+							i.integral = ""
+						}
 					}
 				}).catch(function(response) {
 					this.$Message.error("服务器故障请联系管理员")
 					let i
-							for(i of this.listData) {
-								i.integral = ""
-							}
+					for(i of this.listData) {
+						i.integral = ""
+					}
 				});
 			},
 			Reset() {
@@ -218,54 +224,93 @@
 
 			},
 			Inter() {
-				      clearInterval(this.interval)
-				      this.interval = setInterval(d=>{
-			        this.time = this.time - 1;
-			        
-			        if(this.time==30){
-			        	this.falss =true
-			        }
-			        if(this.time==0){
-			        	clearInterval(this.interval)
-			        	this.$router.push({
-			        		path:'alert'
-			        	})
-			        	this.recae()
-			        }
-			      },1000);
+				clearInterval(this.interval)
+				this.interval = setInterval(d => {
+					this.time = this.time - 1;
+
+					if(this.time <= 40) {
+						this.falss = true
+						//var obj = document.getElementById("ccccc");
+						//obj.style.disabled= "disabled";
+						//$("#ccccc").css("disabled","disabled")
+						this.styles =true
+					}
+					if(this.time <= 0) {
+//						clearInterval(this.interval)
+//						this.$router.push({
+//							name: "Page500"
+//						})
+//
+//						this.$nextTick(d => {
+//							this.recae()
+//						})
+              window.location.reload();
+					}
+				}, 1000);
 			},
-			recae(){
-           let url =general+"/api/period/retrieveSummery"
-           this.$http.get(url).then((response) => {
-           
+			beilv(){
+				let url =general+"/api/setting/retrieve"
+				this.$http.get(url).then((response) => {
+						this.listData[0].Rate=response.body.rateNum	
+						this.listData[1].Rate=response.body.rateNum	
+						this.listData[2].Rate=response.body.rateNum	
+						this.listData[3].Rate=response.body.rateNum	
+						this.listData[4].Rate=response.body.rateNum	
+						this.listData[5].Rate=response.body.rateNum	
+						this.listData[6].Rate=response.body.rateNum	
+						this.listData[7].Rate=response.body.rateNum	
+						this.listData[8].Rate=response.body.rateNum	
+						this.listData[9].Rate=response.body.rateNum
+						this.listData[10].Rate=response.body.rateTwo	
+						this.listData[11].Rate=response.body.rateTwo	
+						this.listData[12].Rate=response.body.rateTwo	
+						this.listData[13].Rate=response.body.rateTwo	
+					if(response.code == 200){
+					}
+				}).catch(function(response) {
+					this.$Message.error("服务器故障请联系管理员倍率丢失")
+				});
+			},
+			recae() {
+				let url = general + "/api/period/retrieveSummery"
+				this.$http.get(url).then((response) => {
+
 					if(response.body.code == 0) {
-						this.currt =response.body.content.current_num
-						this.time =response.body.content.rest_second
-						this.Pids =response.body.content.pk_period
-						this.Inter() 
+						this.currt = response.body.content.current_num
+						this.time = response.body.content.rest_second
+						this.Pids = response.body.content.pk_period
+						this.$nextTick(d => {
+							this.Inter()
+						})
 						
+
 					} else {
 						this.$Message.error(response.body.msg)
 					}
 				}).catch(function(response) {
 					this.$Message.error("服务器故障请联系管理员")
 				});
-      	},
-      	catchFlow(){
-           let url =general+"/root/base/user/retrieveByPK?pk_user="+sessionStorage.Pid
-           this.$http.get(url).then((response) => {
-           
+			},
+			catchFlow() {
+				let url = general + "/root/base/user/retrieveByPK?pk_user=" + sessionStorage.Pid
+				this.$http.get(url).then((response) => {
+
 					if(response.body.code == 0) {
-						
-						this.money =response.body.content.def1
-						
+
+						this.money = response.body.content.def1
+
 					} else {
 						this.$Message.error(response.body.msg)
 					}
 				}).catch(function(response) {
 					this.$Message.error("服务器故障请联系管理员")
 				});
-      	},
+			},
+			routPu() {
+				this.$router.push({
+					name: 'Page500'
+				})
+			}
 		}
 	}
 </script>
@@ -290,10 +335,11 @@
 	.shooo {
 		box-shadow: 2px 4px 15px #0066CC;
 	}
-	.bbb{
-		display: inline-block;border-right: 1px solid #000000;
+	
+	.bbb {
+		display: inline-block;
+		border-right: 1px solid #000000;
 		height: 25px;
 		width: 40px;
-		
 	}
 </style>

@@ -23,7 +23,8 @@ export const constantRouterMap = [
               // Full,
           },
           children: [{path: '404',  name: 'Page404', component: _import('errorPages/Page404') },
-                     {path: '500',name: 'Page500',component: _import('errorPages/Page404')},
+                     {path: '500',name: 'Page500',component: _import('errorPages/Page500')}
+                    
                     ]
     }
 
@@ -49,6 +50,7 @@ export const asyncRouterMap = [
      {path: '/dashboard',name: '账号管理',icon:'speedometer',component: _import('Dashboard')},
      {path: '/introduction',name: '栏目管理',icon:'thumbsup',component: _import('Introduction')},
      {path: '/components',name: '管理功能',redirect: '/components/buttons',icon:'bookmark',
+     hidden:false,
         component: {render (c) { return c('router-view') }},
         children: [ {path: 'buttons',name: '下注',icon:'ios-pause-outline',component: _import('components/Buttons'), hidden:false, },
                     {path: 'hoverbuttons',name: '下注记录',icon:'wand',component: _import('components/HoverButtons')},
@@ -94,8 +96,6 @@ export const asyncRouterMap = [
     
     ]
   },
-
-
   { path: '*', redirect: '/pages/404', hidden: true }
   
 ];

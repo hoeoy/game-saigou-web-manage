@@ -13,6 +13,7 @@ Vue.config.productionTip = false;
 Vue.use(VueResource)
 Vue.use(VueRouter)
 Vue.use(url)
+
 var vm=new Vue({
   el: '#app',
   router,

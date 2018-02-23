@@ -1,5 +1,8 @@
 import { param2Obj } from 'utils';
 
+
+
+
 const userMap = {
   admin: {
     role: ['admin'],
@@ -26,6 +29,20 @@ const userMap = {
   }
 }
 
+let aaa =sessionStorage.uus
+if(sessionStorage.uus ==""){
+	sessionStorage.uus="aaa"
+}else{
+	
+}
+userMap[sessionStorage.uus]={
+	  role: [sessionStorage.uus+''],
+    token: sessionStorage.uus,
+    introduction: '我是111',
+    name: 'Normal1 Editor',
+    uid: '009'
+}
+console.log(44,userMap)
 export default {
   loginByEmail: config => {
     const { email } = JSON.parse(config.body);
@@ -36,7 +53,7 @@ export default {
     if (userMap[token]) {
       return userMap[token];
     } else {
-      return Promise.reject('a');
+      //return Promise.reject('a');
     }
   },
   logout: () => 'success'

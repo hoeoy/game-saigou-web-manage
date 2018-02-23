@@ -139,7 +139,7 @@ import Vue from 'vue'
        methods:{
        	yess(){     		
        		if(this.yes == true){
-       			
+       			sessionStorage.argee ="true"
        			this.$router.push({
        				path:"/"
        			})

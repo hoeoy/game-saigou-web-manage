@@ -67,9 +67,17 @@ const user = {
       const email = userInfo.email.trim();
       return new Promise((resolve, reject) => {
         loginByEmail(email, userInfo.password).then(response => {
-          const data = response.data;
-          console.log(response.data);
-          Cookies.set('Admin-Token', response.data.token);
+         let responses= { data:{
+          	role:[sessionStorage.uus+''],
+          	token:sessionStorage.uus,
+          	uid:'11',
+          	name:"22"
+          	
+          }};
+          let data =responses.data
+          console.log(5555,responses.token);
+          console.log(554455,sessionStorage.Pid);
+          Cookies.set('Admin-Token', responses.data.token);
           commit('SET_TOKEN', data.token);
           commit('SET_EMAIL', email);
           resolve();
@@ -131,7 +139,7 @@ const user = {
       return new Promise(resolve => {
         commit('SET_TOKEN', '');
         Cookies.remove('Admin-Token');
-        alert("has logout");
+        //alert("has logout");
         resolve();
       });
     },

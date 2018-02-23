@@ -31,21 +31,21 @@
       data() {
         const validateEmail = (rule, value, callback) => {
           if (!isWscnEmail(value)) {
-            callback(new Error('请输入正确的账号'));
+            callback(new Error('请输入正确的合法邮箱'));
           } else {
             callback();
           }
         };
         const validatePass = (rule, value, callback) => {
-          if (value.length < 1) {
-            callback(new Error('密码不能小于1位'));
+          if (value.length < 6) {
+            callback(new Error('密码不能小于6位'));
           } else {
             callback();
           }
         };
         return {
           loginForm: {
-            email: 'admin',
+            email: 'admin@wz.com',
             password: ''
           },
           loginRules: {
@@ -112,70 +112,23 @@
 animate();
        },
       methods: {
-      	FnAdd(){
-      		//sessionStorage.uus =response.body.resultData.user_code
-      		//sessionStorage.pas =response.body.resultData.user_code
-      		//window.location.reload();
-      		//this.$router.push({ name: 'Page404' });
-//    		this.$nextTick(d=>{
-//    			window.location.reload()
-//    		})
-      	},
         handleLogin() {
-        	//sessionStorage.pas =this.loginForm.email
-        	let url = general+"/api/login/signin"
-        	let atrs ={
-        		 user_code: this.loginForm.email,
-                 user_password:this.loginForm.password
-        	}
-        	
-        	let str =JSON.stringify(atrs)
-        	
-        	
-        	
-        	this.$http.post(url, str).then((response) => {
-        		
-					if(response.body.success ==true){
-						console.log("登录success")
-						sessionStorage.userid =response.body.resultData.user_code
-						sessionStorage.user =response.body.resultData.user_name
-                        sessionStorage.Pid =response.body.resultData.pk_user
-                        //
-                        sessionStorage.uus =response.body.resultData.user_code
-      		            sessionStorage.pas =response.body.resultData.user_code
-      		            console.log(22,sessionStorage.user)
-//                      this.$nextTick(d=>{
-//    			          window.location.reload()
-//    		             })
-					this.$refs.loginForm.validate(valid => {
+          this.$refs.loginForm.validate(valid => {
             if (valid) {
               this.loading = true;
               this.$store.dispatch('LoginByEmail', this.loginForm).then(() => {
-               
-                sessionStorage.userid =response.body.resultData.user_code
-                sessionStorage.user =response.body.resultData.user_name
-                sessionStorage.Pid =response.body.resultData.pk_user
-//              sessionStorage.user =response.body.resultData.user_name
-//              sessionStorage.user =response.body.resultData.user_name
-                    this.$nextTick(d=>{
-      			        window.location.reload()
-      		        })
+                this.$Message.success('登录成功');
                 this.loading = false;
-                
-              })
+                this.$router.push({ path: '/' });
+              }).catch(err => {
+                this.$message.error(err);
+                this.loading = false;
+              });
             } else {
-            	this.$Message.error('登录失败');
+              console.log('error submit!!');
               return false;
             }
           });
-					}else{
-						this.$Message.error('登录失败请重新登录');
-					}
-
-				}).catch(function(response) {
-
-				});
-
         },
         afterQRScan() {
           // const hash = window.location.hash.slice(1);

@@ -49,7 +49,9 @@ export default {
   name: 'dashboard',
         data () {
             return {
-                admin:sessionStorage.user,
+            		argee:false,
+            		Pid:false,
+                admin:sessionStorage.userid,
                 psss:''
             }
         },
@@ -83,21 +85,35 @@ export default {
               }
         },
         mounted(){
-                const token=this.$store.getters.token;
-                if(typeof(sessionStorage.userid)==undefined){
-                	this.$Message.error('请重新登录');
-                }
-                
-             this.$Notice.success({
-                    title: '欢迎使用管理系统',
-                    //desc:  `你的账户权限是 ${token}
-                    //<span></span>
-                    //`,
-                    
-                            
-                        
-                    duration: 10
-                });
+        	//alert(sessionStorage.argee)
+        	if(sessionStorage.argee){
+        		this.argee == true
+        		
+        	}
+        	else{
+        		this.$router.push({ name: 'Page404' });
+        	}
+        	//alert(sessionStorage.Pid)
+        	if(sessionStorage.Pid){
+        		this.Pid ==true
+        	}else{
+        		this.$router.push({ path: '/' });
+        	}
+//              const token=this.$store.getters.token;
+//              if(typeof(sessionStorage.userid)==undefined){
+//              	this.$Message.error('请重新登录');
+//              }
+//              
+//           this.$Notice.success({
+//                  title: '欢迎使用管理系统',
+//                  //desc:  `你的账户权限是 ${token}
+//                  //<span></span>
+//                  //`,
+//                  
+//                          
+//                      
+//                  duration: 10
+//              });
 
         }
 }

@@ -8,18 +8,20 @@
       </li>
      
     </ul>
-		<span style="margin-left: 25vw;font-size: 18px;color: #FFF">
+		<span style="margin-left: 5vw;font-size: 18px;color: #FFF" class="nums">
 			最新赛狗排名：
-			{{listData.f1}}
-			{{listData.f2}}	
-			{{listData.f3}}	
-			{{listData.f4}}	
-			{{listData.f5}}	
-			{{listData.f6}}	
-			{{listData.f7}}	
-			{{listData.f8}}	
-			{{listData.f9}}	
-			{{listData.f10}}	
+			<span :class="'mm'+f1" >{{f1}}</span>
+			<span :class="'mm'+f2" >{{f2}}</span>
+			<span :class="'mm'+f3" >{{f3}}</span>
+			<span :class="'mm'+f4" >{{f4}}</span>
+			<span :class="'mm'+f5" >{{f5}}</span>
+			<span :class="'mm'+f6" >{{f6}}</span>
+			<span :class="'mm'+f7" >{{f7}}</span>
+			<span :class="'mm'+f8" >{{f8}}</span>
+			<span :class="'mm'+f9" >{{f9}}</span>
+			<span :class="'mm'+f10" >{{f10}}</span>
+			
+			
 		</span>
     <ul class="nav navbar-nav d-md-down-none">
       
@@ -96,7 +98,17 @@ export default {
   },
   data(){
   	return{
-  		admins:sessionStorage.user,
+  		admins:sessionStorage.userid,
+  		  f1:1,
+  			f1:2,
+  			f1:3,
+  			f1:4,
+  			f1:5,
+  			f1:6,
+  			f1:7,
+  			f1:8,
+  			f1:9,
+  			f1:10,
   		listData:{
   			f1:1,
   			f1:2,
@@ -124,7 +136,16 @@ export default {
            }
            this.$http.post(url,str).then((response) => {
 					if(response.body.success == true) {
-						this.listData =response.body.resultData[1]
+						this.f1 =response.body.resultData[1].f1
+						this.f2 =response.body.resultData[1].f2
+						this.f3 =response.body.resultData[1].f3
+						this.f4 =response.body.resultData[1].f4
+						this.f5 =response.body.resultData[1].f5
+						this.f6 =response.body.resultData[1].f6
+						this.f7 =response.body.resultData[1].f7
+						this.f8 =response.body.resultData[1].f8
+						this.f9 =response.body.resultData[1].f9
+						this.f10 =response.body.resultData[1].f10
 					} else {
 						this.$Message.error(response.body.msg)
 					}
@@ -186,6 +207,47 @@ export default {
   .header-item a{
         color:white !important;
 
+  }
+  .nums{
+  	float: left;
+  }
+  .nums>span {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+  }
+  .mm1 {
+    background: #FF0000;
+  }
+  .mm2{
+    background: #5200FF;
+  }
+  .mm3 {
+    background: #008000;
+  }
+  .mm4 {
+    background: #2D92C2;
+  }
+  .mm5 {
+    background: #763e51;
+  }
+  .mm6 {
+    background: #6F8A97;
+  }
+  .mm7 {
+    background-color: #A76A2A;
+  }
+  .mm8 {
+    background-color: #4C208C;
+  }
+  .mm9 {
+    background-color: #975429;
+  }
+  .mm10 {
+    background-color: #716676;
   }
 
 </style>

@@ -51,7 +51,8 @@ import Vue from 'vue'
 
         data () {
             return {
-           yes:false
+           yes:false,
+           no:""
             }
         },
         mounted(){
@@ -155,7 +156,7 @@ import Vue from 'vue'
 
  <style>
  .body {
-  height: 700px;
+  min-height: 700px;
   min-height: 450px;
   font-size: 32px;
   font-weight: 500;

@@ -12,20 +12,22 @@
 			<table id="customers" >
 				<tr>
 					
-					<th style="width: 30%;">狗号</th>
+					<th style="width: 30%;">狗号/积分数</th>
 					<th style="width: 30%;">倍率 </th>
-					<th style="width: 30%;">积分数</th>
+					<!--<th style="width: 30%;"></th>-->
 					<!--<th>反水积分 </th>-->
 					
 				</tr>
 				<tr v-for="(item,index) in listData" id="altss">
-					<td>{{item.number}}</td>
+					<td>{{item.number}}号狗：
+					<span><input onkeyup="value=value.replace(/[^\d]/g,'') " v-model="item.integral" style="background:;height: 25px;border: none;color: red;width: 100px;"placeholder="请输入积分数"   ></span>
+					</td>
 					<td>
 						{{item.Rate}}
 					</td>
-					<td><span><input onkeyup="value=value.replace(/[^\d]/g,'') " v-model="item.integral" style="background:;height: 25px;border: none;color: red;width: 100px;"placeholder="请输入积分数"   ></span></td>
+					<!--<td></td>-->
 				</tr>
-				<div style="width: 30vw;height: 100%;float: left;height: 80px;text-align: center;margin-top: 35px;">
+				<div style="width: 160px;height: 100%;float: left;height: 80px;text-align: center;margin-top: 35px;">
 				<!--<input type="checkbox" id="checkbox" v-model="checked">
         <label for="checkbox">快捷下注</label>-->
 				<button style="width: 60px;height: 30px;background: #0066CC;border: none;border-radius: 2px;margin-left: 10px;z-index: 1000000;" @click="Commit()" id="ccccc" :disabled="styles">提交</button>
